@@ -45,6 +45,20 @@ citation in your report.
 '''
 
 
+# Importing the necessary libraries
+import pandas as pd
+
+
+df = pd.read_excel('./Data/ames.xlsx')
+
+# This is how you print the first 5 rows of a dataframe and last 5 rows
+print(df)
+
+# JMR - This is how you access a specific cell in a dataframe by index
+print(df.iloc[0, 2]) 
+# JMR - This is more specific and but you need to remember all of the column names or make an array for them
+print(df.iloc[1, df.columns.get_loc('Lot_Shape')]) 
+
 
 
 
