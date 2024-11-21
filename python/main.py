@@ -51,6 +51,9 @@ import matplotlib.pyplot as plt
 from scipy.stats import skew
 import seaborn as sns
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
 
 # Allowing all columns and rows to be displayed
 pd.set_option('display.max_columns', None)
@@ -228,7 +231,38 @@ def plot_neighborhood_counts(df):
     plt.tight_layout()
     plt.show()
     
-plot_neighborhood_counts(df)
+
+# LINEAR REGRESSION JMR
+
+
+
+# Assuming df is your DataFrame and 'SalePrice' is the target variable
+# Replace 'Full_Bath', 'Fireplaces', 'Garage_Type', 'Kitchen_Qual' with the actual feature column names
+X = df[['Full_Bath', 'Fireplaces', 'Garage_Type', 'Kitchen_Qual']]  # Features
+y = df['SalePrice']  # Target variable
+
+# Convert categorical variables to numerical values using one-hot encoding
+X = pd.get_dummies(X, drop_first=True)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=100)
+
+# Create the linear regression model
+model = LinearRegression()
+
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f'Mean Squared Error: {mse}')
+print(f'R^2 Score: {r2}')
 
 
 
